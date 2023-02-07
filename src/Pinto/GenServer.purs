@@ -21,6 +21,7 @@ module Pinto.GenServer
   , defaultSpec
   , startLink
   , call
+  , callWithTimeout
   , cast
   , stop
   , reply
@@ -304,6 +305,14 @@ call
   -> CallFn reply cont stop msg state
   -> Effect reply
 call r callFn = callFFI (registryInstance r) callFn (Just 5000)
+
+callWithTimeout
+  :: forall reply cont stop msg state
+   . ServerRef cont stop msg state
+  -> CallFn reply cont stop msg state
+  -> Maybe Int
+  -> Effect reply
+callWithTimeout r = callFFI (registryInstance r)
 
 foreign import replyToFFI :: forall reply. From reply -> reply -> Effect Unit
 
