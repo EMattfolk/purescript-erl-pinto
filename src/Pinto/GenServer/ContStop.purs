@@ -289,6 +289,7 @@ foreign import callFFI
   :: forall reply cont stop state m
    . ServerInstance cont stop state m
   -> CallFn reply cont stop state m
+  -> Maybe Int
   -> Effect reply
 
 call
@@ -298,7 +299,7 @@ call
   => ServerRef cont stop state m
   -> CallFn reply cont stop state m
   -> Effect reply
-call r callFn = callFFI (registryInstance r) callFn
+call r callFn = callFFI (registryInstance r) callFn (Just 5000)
 
 foreign import castFFI
   :: forall cont stop state m

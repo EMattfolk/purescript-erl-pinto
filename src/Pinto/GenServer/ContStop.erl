@@ -3,7 +3,7 @@
 -include_lib("kernel/include/logger.hrl").
 
 -export([ startLinkFFI/3
-        , callFFI/2
+        , callFFI/3
         , castFFI/2
         , replyToFFI/2
         , stopFFI/1
@@ -38,9 +38,14 @@ castFFI(ServerRef, CastFn) ->
       unit
   end.
 
-callFFI(ServerRef, CallFn) ->
+callFFI(ServerRef, CallFn, Timeout) ->
   fun() ->
-      gen_server:call(ServerRef, CallFn)
+      case Timeout of
+        ?nothing ->
+          gen_server:call(ServerRef, CallFn, infinity);
+        ?just(T) ->
+          gen_server:call(ServerRef, CallFn, T)
+      end
   end.
 
 replyToFFI(From, Reply) ->
