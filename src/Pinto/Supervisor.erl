@@ -132,7 +132,7 @@ restart_from_ps({restartTransient}) -> transient;
 restart_from_ps({restartPermanent}) -> permanent;
 restart_from_ps({restartTemporary}) -> temporary.
 
-shutdown_from_ps({shutdownBrutal}) -> brutal;
+shutdown_from_ps({shutdownBrutal}) -> brutal_kill;
 shutdown_from_ps({shutdownInfinity}) -> infinity;
 shutdown_from_ps({shutdownTimeout, Ms}) ->  round(Ms).
 
